@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medicall Talento Humano — propuesta de rediseño</title>
+<meta name="description" content="Propuesta de rediseño para Medicall Talento Humano: 16.000 colaboradores, 16 ciudades y un buscador de vacantes que responde en el mismo instante.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#0D2E28;
+  --verde:#146B5A;
+  --verde-claro:#3FA88E;
+  --papel:#F6F8F5;
+  --arena:#E4EBE4;
+  --ocre:#C9922E;
+  --linea:rgba(13,46,40,.14);
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--papel);color:var(--tinta);
+  font-family:var(--sans);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.08;margin:0}
+h1{font-size:clamp(2.4rem,5.4vw,4.1rem);letter-spacing:-.015em}
+h2{font-size:clamp(1.7rem,3.2vw,2.5rem);letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0 0 1em}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.banda{padding:88px 0}
+
+/* aviso de propuesta */
+.aviso{background:var(--tinta);color:#fff;font-size:.86rem;padding:9px 24px;text-align:center}
+.aviso b{font-weight:600;color:#9FD9C6}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;background:rgba(246,248,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--linea)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:24px}
+.marca{font-family:var(--serif);font-size:1.35rem;text-decoration:none;letter-spacing:-.02em}
+.marca span{color:var(--verde)}
+.nav nav{display:flex;gap:26px;font-size:.94rem}
+.nav nav a{text-decoration:none;opacity:.78}
+.nav nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.btn{
+  display:inline-block;background:var(--verde);color:#fff;text-decoration:none;
+  padding:12px 22px;border-radius:999px;font-weight:500;font-size:.95rem;border:0;cursor:pointer;
+  font-family:var(--sans);
+}
+.btn:hover{background:#0F5748}
+
+/* hero */
+.hero{padding:70px 0 60px;border-bottom:1px solid var(--linea)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero p.entrada{font-size:1.12rem;max-width:46ch;opacity:.85}
+.cifras{display:flex;gap:34px;flex-wrap:wrap;margin-top:34px;padding-top:26px;border-top:1px solid var(--linea)}
+.cifra strong{display:block;font-family:var(--serif);font-size:2rem;line-height:1}
+.cifra small{font-size:.85rem;opacity:.7}
+.mapa-caja{position:relative}
+.mapa-caja svg{width:100%;height:auto;max-height:520px;display:block}
+.pais{fill:var(--arena);stroke:rgba(13,46,40,.22);stroke-width:1}
+.punto{fill:var(--verde);cursor:pointer;transition:r .15s ease,fill .15s ease}
+.punto:hover,.punto:focus{fill:var(--ocre);outline:none}
+.punto-halo{fill:var(--verde);opacity:.16}
+.etiqueta{font-family:var(--sans);font-size:9.5px;fill:var(--tinta);opacity:.72;pointer-events:none}
+.tooltip{
+  position:absolute;background:var(--tinta);color:#fff;padding:10px 14px;border-radius:10px;
+  font-size:.85rem;line-height:1.45;pointer-events:none;opacity:0;transition:opacity .12s;max-width:220px;
+}
+.tooltip.on{opacity:1}
+
+/* buscador */
+.buscador{background:var(--tinta);color:#fff}
+.buscador h2{max-width:18ch}
+.buscador .intro{max-width:52ch;opacity:.8;margin-top:14px}
+.campo{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
+.campo input{
+  flex:1 1 380px;padding:16px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.07);color:#fff;font-family:var(--sans);font-size:1rem;
+}
+.campo input::placeholder{color:rgba(255,255,255,.5)}
+.campo input:focus{outline:2px solid var(--verde-claro);outline-offset:2px}
+.campo .btn{background:var(--verde-claro);color:var(--tinta);font-weight:600;padding:16px 30px}
+.campo .btn:hover{background:#66C4AB}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.chip{
+  background:transparent;border:1px solid rgba(255,255,255,.28);color:rgba(255,255,255,.85);
+  padding:7px 14px;border-radius:999px;font-size:.84rem;cursor:pointer;font-family:var(--sans);
+}
+.chip:hover{border-color:var(--verde-claro);color:#fff}
+.resultados{margin-top:38px;display:grid;gap:14px}
+.estado{opacity:.6;font-size:.92rem}
+.vac{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;padding:22px 24px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;
+}
+.vac h3{font-family:var(--sans);font-size:1.05rem;font-weight:600}
+.vac .meta{font-size:.88rem;opacity:.72;margin-top:5px}
+.vac ul{margin:14px 0 0;padding-left:18px;font-size:.88rem;opacity:.9}
+.vac li{margin-bottom:3px}
+.match{
+  font-family:var(--serif);font-size:1.5rem;color:var(--verde-claro);text-align:right;line-height:1;
+}
+.match small{display:block;font-family:var(--sans);font-size:.7rem;opacity:.6;margin-top:4px}
+.nota-ia{margin-top:26px;font-size:.85rem;opacity:.55;max-width:62ch}
+
+/* texto */
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.sello{
+  border-left:3px solid var(--ocre);padding:4px 0 4px 20px;margin-top:26px;
+}
+.sello strong{font-family:var(--serif);font-size:1.3rem;display:block}
+
+/* valores */
+.valores{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--linea);border:1px solid var(--linea);margin-top:36px}
+.valor{background:var(--papel);padding:26px}
+.valor h3{margin-bottom:8px}
+.valor p{font-size:.92rem;opacity:.78;margin:0}
+
+/* ciudades */
+.ciudades{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+.ciudad{border:1px solid var(--linea);border-radius:12px;padding:18px;background:#fff}
+.ciudad h3{font-family:var(--sans);font-size:1rem;margin-bottom:8px}
+.ciudad a{display:block;font-size:.87rem;text-decoration:none;opacity:.78;margin-bottom:3px}
+.ciudad a:hover{opacity:1;color:var(--verde)}
+
+/* aliados */
+.aliados{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.aliado{border:1px solid var(--linea);border-radius:999px;padding:9px 18px;font-size:.88rem;opacity:.75;background:#fff}
+
+/* fraude */
+.fraude{background:var(--ocre);color:#241A05;padding:26px 0}
+.fraude .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.fraude p{margin:0;font-size:.98rem;max-width:70ch}
+
+footer{background:var(--tinta);color:rgba(255,255,255,.82);padding:56px 0 34px;font-size:.9rem}
+footer h3{font-family:var(--sans);font-size:.95rem;margin-bottom:12px;color:#fff}
+.pie{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+footer a{color:rgba(255,255,255,.75);text-decoration:none;display:block;margin-bottom:6px}
+footer a:hover{color:#fff}
+.credito{border-top:1px solid rgba(255,255,255,.15);margin-top:38px;padding-top:20px;font-size:.82rem;opacity:.6}
+
+:focus-visible{outline:2px solid var(--verde-claro);outline-offset:3px}
+
+@media (max-width:940px){
+  .hero .wrap,.dos,.pie{grid-template-columns:1fr;gap:38px}
+  .valores{grid-template-columns:1fr 1fr}
+  .ciudades{grid-template-columns:1fr 1fr}
+  .nav nav{display:none}
+  .banda{padding:60px 0}
+  .mapa-caja svg{max-height:420px}
+}
+@media (max-width:560px){
+  .valores,.ciudades{grid-template-columns:1fr}
+  .vac{grid-template-columns:1fr}
+  .match{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="aviso">Propuesta de rediseño preparada por un candidato externo. <b>No es el sitio oficial</b> de Medicall Talento Humano.</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="marca" href="#">Medicall <span>Talento Humano</span></a>
+    <nav>
+      <a href="#vacantes">Vacantes</a>
+      <a href="#nosotros">Quiénes somos</a>
+      <a href="#ciudades">Ciudades</a>
+      <a href="#aliados">Aliados</a>
+    </nav>
+    <a class="btn" href="#vacantes">Buscar vacante</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Somos 16.000 personas cuidando la salud de Colombia.</h1>
+      <p class="entrada">Administramos procesos de gestión humana para clínicas, hospitales y aseguradoras desde 2013. Si buscas trabajo en salud, aquí encuentras la vacante en segundos y sin pantallas en blanco.</p>
+      <div class="cifras">
+        <div class="cifra"><strong>16.000</strong><small>colaboradores activos</small></div>
+        <div class="cifra"><strong>76%</strong><small>son mujeres</small></div>
+        <div class="cifra"><strong>16</strong><small>ciudades</small></div>
+        <div class="cifra"><strong>efr A</strong><small>certificación 2025</small></div>
+      </div>
+    </div>
+    <div class="mapa-caja" id="mapaCaja">
+      <div class="tooltip" id="tip"></div>
+    </div>
+  </div>
+</section>
+
+<section class="banda buscador" id="vacantes">
+  <div class="wrap">
+    <h2>Escribe lo que sabes hacer y dónde vives.</h2>
+    <p class="intro">Sin filtros encadenados, sin recargar, sin esperar a que abra otro portal. Escríbelo como se lo contarías a alguien.</p>
+
+    <div class="campo">
+      <label for="q" class="sr-only" style="position:absolute;left:-9999px">Describe tu perfil</label>
+      <input id="q" type="text" autocomplete="off" placeholder="Ej: auxiliar de enfermería en Montería, turnos de noche">
+      <button class="btn" id="go">Buscar</button>
+    </div>
+
+    <div class="chips" id="chips"></div>
+    <div class="resultados" id="res"><p class="estado">Escribe arriba o toca un ejemplo para ver cómo responde.</p></div>
+
+    <p class="nota-ia">Cómo funciona: en esta demo el emparejamiento corre en el navegador sobre un set de vacantes de ejemplo, por eso responde al instante y sin servidor. En producción la misma interfaz se conecta a la base real de vacantes y a un modelo de lenguaje que interpreta la descripción libre del candidato, normaliza el cargo y explica por qué cada vacante encaja.</p>
+  </div>
+</section>
+
+<section class="banda" id="nosotros">
+  <div class="wrap">
+    <div class="dos">
+      <div>
+        <h2>Trabajamos con pasión por las personas.</h2>
+        <div class="sello">
+          <strong>Certificación efr A</strong>
+          Empresa familiarmente responsable. Empezamos en 2018 con calificación C, llegamos a B+ en 2022 y en 2025 alcanzamos A, el nivel de excelencia.
+        </div>
+      </div>
+      <div>
+        <p>Desde el 12 de diciembre de 2013 nos especializamos en la administración de procesos integrales de gestión humana, con foco en el sector salud y experiencia en otros sectores.</p>
+        <p>Nuestro propósito: atraer, desarrollar y retener el mejor talento humano, generando impacto social, rentabilidad y excelencia operativa en cada proceso. Para 2028 queremos tener consolidado el modelo de gestión sostenible con los procesos ya transformados digitalmente.</p>
+        <p>Hoy estamos en 16 ciudades del país, con el respaldo de más de 10 aliados estratégicos.</p>
+      </div>
+    </div>
+
+    <div class="valores">
+      <div class="valor"><h3>Servicio</h3><p>Ayudar y servir de apoyo a quien lo necesite, como parte del rol de ser miembros de una sociedad y una empresa.</p></div>
+      <div class="valor"><h3>Compromiso</h3><p>Cumplir con el desarrollo del trabajo dentro del plazo estipulado y con un alto estándar de calidad.</p></div>
+      <div class="valor"><h3>Honestidad</h3><p>Comportarse y expresarse con sinceridad y coherencia, respetando la justicia y la verdad.</p></div>
+      <div class="valor"><h3>Respeto</h3><p>Reconocer los derechos y la dignidad del otro, de igual a igual, compartida por todos.</p></div>
+      <div class="valor"><h3>Responsabilidad</h3><p>Asumir las consecuencias de nuestros actos y cumplir con el deber.</p></div>
+      <div class="valor"><h3>Equilibrio</h3><p>Valor efr. Buscamos que el trabajo sea enriquecedor y permita equilibrar la vida personal, familiar y laboral.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="banda" id="ciudades" style="background:#fff;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)">
+  <div class="wrap">
+    <h2>Dónde estamos</h2>
+    <p style="max-width:56ch;opacity:.8;margin-top:14px">Cada sede atiende su región. Toca el número para llamar o el correo para escribir.</p>
+    <div class="ciudades" id="listaCiudades"></div>
+  </div>
+</section>
+
+<section class="banda" id="aliados">
+  <div class="wrap">
+    <h2>Aliados estratégicos</h2>
+    <div class="aliados">
+      <span class="aliado">Clínica del Virrey</span>
+      <span class="aliado">Salud Total</span>
+      <span class="aliado">CPO</span>
+      <span class="aliado">Clínica Los Nogales</span>
+      <span class="aliado">Funtalentum</span>
+      <span class="aliado">Cooptalentum</span>
+      <span class="aliado">Univer</span>
+      <span class="aliado">Dentoláser</span>
+      <span class="aliado">Hospital de San José</span>
+      <span class="aliado">Hospital Universitario de San José</span>
+      <span class="aliado">Inversiones Novo</span>
+      <span class="aliado">IVAC</span>
+      <span class="aliado">Probocarte</span>
+      <span class="aliado">Hospitalarte</span>
+      <span class="aliado">Alianza Diagnóstica</span>
+    </div>
+  </div>
+</section>
+
+<section class="fraude">
+  <div class="wrap">
+    <p><strong>Medicall Talento Humano no cobra por procesos de selección ni de contratación.</strong> Si alguien te pide dinero a nombre de la empresa, repórtalo por el canal ético. Ninguna etapa del proceso tiene costo para el candidato.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="pie">
+      <div>
+        <h3>Medicall Talento Humano</h3>
+        <p style="opacity:.75">Calle 4G # 66A – 08, Bogotá D.C.<br>(57) 601 742 5770</p>
+      </div>
+      <div>
+        <h3>Candidatos</h3>
+        <a href="#vacantes">Ver vacantes</a>
+        <a href="#vacantes">Registrar hoja de vida</a>
+        <a href="#ciudades">Contacto por ciudad</a>
+      </div>
+      <div>
+        <h3>Legales</h3>
+        <a href="#">Tratamiento de datos personales</a>
+        <a href="#">Reglamento interno de trabajo</a>
+        <a href="#">Política de desconexión laboral</a>
+        <a href="#">Canal ético</a>
+      </div>
+    </div>
+    <p class="credito">Prototipo de rediseño con fines de demostración. Los textos institucionales provienen del sitio público de Medicall Talento Humano; las vacantes mostradas son datos de ejemplo.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- mapa ---------- */
+const CIUDADES = [
+  {n:"Armenia",      lat:4.53,  lon:-75.68, tel:"(+57 606) 349 7680 Ext 90217", mail:"pereira@medicallth.com"},
+  {n:"Barranquilla", lat:10.96, lon:-74.80, tel:"(+57 605) 361 2000 Ext 40504", mail:"barranquilla@medicallth.com"},
+  {n:"Bogotá D.C.",  lat:4.71,  lon:-74.07, tel:"(+57 601) 742 5770 Ext 129",   mail:"gestionhumana.dg@medicallth.com"},
+  {n:"Bucaramanga",  lat:7.12,  lon:-73.12, tel:"(+57 607) 643 8100 Ext 35118", mail:"bucaramanga@medicallth.com"},
+  {n:"Cali",         lat:3.44,  lon:-76.52, tel:"(+57 607) 660 1457 Ext 21",    mail:"cali@medicallth.com"},
+  {n:"Cartagena",    lat:10.39, lon:-75.51, tel:"(+57 605) 656 9360 Ext 4204",  mail:"cartagena@medicallth.com"},
+  {n:"Ibagué",       lat:4.44,  lon:-75.24, tel:"(+57 608) 270 9767 Ext 70204", mail:"ibague@medicallth.com"},
+  {n:"Girardot",     lat:4.30,  lon:-74.80, tel:"(+57 608) 887 2800 Ext 75204", mail:"girardot@medicallth.com"},
+  {n:"Manizales",    lat:5.07,  lon:-75.52, tel:"(+57 606) 878 2333 Ext 50432", mail:"manizales@medicallth.com"},
+  {n:"Medellín",     lat:6.25,  lon:-75.57, tel:"(+57 604) 319 9900 Ext 30426", mail:"medellin@medicallth.com"},
+  {n:"Montería",     lat:8.75,  lon:-75.88, tel:"(+57 604) 784 8950 Ext 45207", mail:"monteria@medicallth.com"},
+  {n:"Pereira",      lat:4.81,  lon:-75.69, tel:"(+57 606) 349 7680 Ext 90218", mail:"pereira@medicallth.com"},
+  {n:"Santa Marta",  lat:11.24, lon:-74.20, tel:"(+57 605) 432 8700 Ext 44532", mail:"santamarta@medicallth.com"},
+  {n:"Sincelejo",    lat:9.30,  lon:-75.40, tel:"(+57 605) 279 9240 Ext 42112", mail:"sincelejo@medicallth.com"},
+  {n:"Valledupar",   lat:10.46, lon:-73.25, tel:"(+57 605) 574 8265 Ext 225",   mail:"valledupar@medicallth.com"},
+  {n:"Villavicencio",lat:4.14,  lon:-73.63, tel:"(+57 608) 681 8200 Ext 8022",  mail:"villavicencio@medicallth.com"}
+];
+
+const CONTORNO = [
+  [-71.13,12.44],[-71.30,11.85],[-72.45,11.75],[-72.90,10.50],[-72.10,9.30],[-72.50,8.00],
+  [-72.40,7.40],[-71.00,6.90],[-70.10,6.95],[-69.40,6.15],[-67.90,6.20],[-67.45,6.20],
+  [-67.85,5.30],[-67.60,3.80],[-67.30,2.40],[-67.85,1.35],[-69.85,1.08],[-69.85,-0.60],
+  [-69.40,-1.20],[-70.05,-2.60],[-70.70,-3.80],[-69.95,-4.23],[-72.90,-2.40],[-74.80,-0.20],
+  [-76.10,0.40],[-77.40,0.40],[-78.60,1.25],[-78.85,2.50],[-77.40,4.00],[-77.40,5.60],
+  [-77.35,6.50],[-77.90,7.20],[-77.30,8.00],[-77.40,8.65],[-76.90,8.65],[-76.10,9.40],
+  [-75.65,9.45],[-75.60,10.70],[-74.85,11.10],[-74.20,11.35],[-73.40,11.30],[-72.30,11.90]
+];
+
+const LON0=-79.3, LON1=-66.5, LAT0=-4.8, LAT1=13.1;
+const H=600, ESC=H/(LAT1-LAT0), W=(LON1-LON0)*ESC;
+const px = (lon,lat)=>[ (lon-LON0)*ESC, (LAT1-lat)*ESC ];
+
+const path = CONTORNO.map((c,i)=>{const[x,y]=px(c[0],c[1]);return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ')+' Z';
+
+let svg = `<svg viewBox="0 0 ${W.toFixed(0)} ${H}" role="img" aria-label="Mapa de Colombia con las 16 ciudades donde opera Medicall Talento Humano">
+<path class="pais" d="${path}"/>`;
+CIUDADES.forEach((c,i)=>{
+  const [x,y]=px(c.lon,c.lat);
+  const alinearIzq = x > W*0.62;
+  svg += `<circle class="punto-halo" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="11"/>
+  <circle class="punto" data-i="${i}" tabindex="0" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5"><title>${c.n}</title></circle>
+  <text class="etiqueta" x="${(x+(alinearIzq?-9:9)).toFixed(1)}" y="${(y+3.5).toFixed(1)}" text-anchor="${alinearIzq?'end':'start'}">${c.n}</text>`;
+});
+svg += '</svg>';
+const caja = document.getElementById('mapaCaja');
+caja.insertAdjacentHTML('afterbegin', svg);
+
+const tip = document.getElementById('tip');
+caja.querySelectorAll('.punto').forEach(p=>{
+  const mostrar = e=>{
+    const c = CIUDADES[p.dataset.i];
+    tip.innerHTML = `<strong>${c.n}</strong><br>${c.tel}<br>${c.mail}`;
+    const r = caja.getBoundingClientRect(), b = p.getBoundingClientRect();
+    tip.style.left = Math.min(b.left-r.left+14, r.width-230)+'px';
+    tip.style.top  = (b.top-r.top-10)+'px';
+    tip.classList.add('on');
+  };
+  const ocultar = ()=>tip.classList.remove('on');
+  p.addEventListener('mouseenter',mostrar);
+  p.addEventListener('focus',mostrar);
+  p.addEventListener('mouseleave',ocultar);
+  p.addEventListener('blur',ocultar);
+  p.addEventListener('click',()=>document.getElementById('ciudades').scrollIntoView());
+});
+
+/* ---------- lista de ciudades ---------- */
+document.getElementById('listaCiudades').innerHTML = CIUDADES.map(c=>`
+  <div class="ciudad">
+    <h3>${c.n}</h3>
+    <a href="tel:${c.tel.replace(/[^0-9+]/g,'')}">${c.tel}</a>
+    <a href="mailto:${c.mail}">${c.mail}</a>
+  </div>`).join('');
+
+/* ---------- vacantes de ejemplo ---------- */
+const VACANTES = [
+  {t:"Auxiliar de enfermería",  c:"Montería",     area:"asistencial", turno:"noche",    exp:"6 meses",  contrato:"Obra o labor", salario:"$1.600.000 + recargos", tags:["auxiliar","enfermeria","enfermera","asistencial","cuidado"]},
+  {t:"Auxiliar de enfermería",  c:"Sincelejo",    area:"asistencial", turno:"rotativo", exp:"sin experiencia", contrato:"Término fijo", salario:"$1.550.000 + recargos", tags:["auxiliar","enfermeria","enfermera","asistencial"]},
+  {t:"Enfermera jefe",          c:"Barranquilla", area:"asistencial", turno:"rotativo", exp:"2 años",   contrato:"Término indefinido", salario:"$3.200.000", tags:["jefe","enfermera","enfermeria","profesional","coordinacion"]},
+  {t:"Médico general",          c:"Montería",     area:"asistencial", turno:"diurno",   exp:"1 año",    contrato:"Prestación de servicios", salario:"$7.500.000", tags:["medico","medicina","general","consulta"]},
+  {t:"Médico general urgencias",c:"Cartagena",    area:"asistencial", turno:"noche",    exp:"1 año",    contrato:"Obra o labor", salario:"$8.200.000", tags:["medico","urgencias","medicina","general"]},
+  {t:"Bacteriólogo",            c:"Medellín",     area:"diagnostico", turno:"diurno",   exp:"1 año",    contrato:"Término fijo", salario:"$3.400.000", tags:["bacteriologo","laboratorio","muestras","clinico"]},
+  {t:"Auxiliar de laboratorio", c:"Cali",         area:"diagnostico", turno:"rotativo", exp:"6 meses",  contrato:"Obra o labor", salario:"$1.650.000", tags:["auxiliar","laboratorio","toma","muestras"]},
+  {t:"Terapeuta respiratorio",  c:"Bogotá D.C.",  area:"asistencial", turno:"rotativo", exp:"1 año",    contrato:"Término fijo", salario:"$2.900.000", tags:["terapeuta","respiratoria","terapia","uci"]},
+  {t:"Regente de farmacia",     c:"Bucaramanga",  area:"farmacia",    turno:"diurno",   exp:"1 año",    contrato:"Término indefinido", salario:"$2.100.000", tags:["regente","farmacia","medicamentos","dispensacion"]},
+  {t:"Auxiliar de farmacia",    c:"Villavicencio",area:"farmacia",    turno:"rotativo", exp:"sin experiencia", contrato:"Obra o labor", salario:"$1.500.000", tags:["auxiliar","farmacia","medicamentos"]},
+  {t:"Facturador en salud",     c:"Montería",     area:"administrativo", turno:"diurno",exp:"1 año",    contrato:"Término fijo", salario:"$1.800.000", tags:["facturacion","facturador","administrativo","rips","glosas"]},
+  {t:"Auxiliar administrativo", c:"Santa Marta",  area:"administrativo", turno:"diurno",exp:"6 meses",  contrato:"Término fijo", salario:"$1.500.000", tags:["administrativo","auxiliar","oficina","archivo"]},
+  {t:"Camillero",               c:"Valledupar",   area:"apoyo",       turno:"rotativo", exp:"sin experiencia", contrato:"Obra o labor", salario:"$1.423.500", tags:["camillero","apoyo","traslado"]},
+  {t:"Psicólogo ocupacional",   c:"Pereira",      area:"gestion humana", turno:"diurno",exp:"2 años",   contrato:"Término indefinido", salario:"$3.000.000", tags:["psicologo","psicologia","seleccion","gestion","humana","talento"]},
+  {t:"Analista de nómina",      c:"Bogotá D.C.",  area:"gestion humana", turno:"diurno",exp:"2 años",   contrato:"Término indefinido", salario:"$3.100.000", tags:["nomina","analista","liquidacion","gestion","humana","contable"]},
+  {t:"Coordinador de SST",      c:"Manizales",    area:"gestion humana", turno:"diurno",exp:"3 años",   contrato:"Término indefinido", salario:"$4.200.000", tags:["sst","seguridad","salud","trabajo","coordinador","riesgos"]}
+];
+
+const DOCS = {
+  asistencial:["Diploma y acta de grado","Tarjeta profesional o ReTHUS vigente","Certificados de experiencia","Esquema de vacunación al día"],
+  diagnostico:["Diploma y acta de grado","Registro ReTHUS","Certificados de experiencia"],
+  farmacia:["Certificado de regencia o técnico","Certificados de experiencia","Documento de identidad"],
+  administrativo:["Certificado de estudios","Certificados laborales","Documento de identidad"],
+  apoyo:["Documento de identidad","Certificado de estudios (bachiller)","Esquema de vacunación al día"],
+  "gestion humana":["Diploma y acta de grado","Tarjeta profesional","Certificados de experiencia"]
+};
+
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+
+function buscar(texto){
+  const t = norm(texto);
+  if(!t.trim()) return [];
+  const palabras = t.split(/[^a-z0-9]+/).filter(w=>w.length>2);
+
+  const ciudad = CIUDADES.find(c=>t.includes(norm(c.n).replace(" d.c.","")) || (norm(c.n)==="bogota d.c." && t.includes("bogota")));
+  let turno = null;
+  if(/noche|nocturn/.test(t)) turno="noche";
+  else if(/dia|diurn|manana|oficina/.test(t)) turno="diurno";
+  else if(/rotativ|turnos/.test(t)) turno="rotativo";
+  const sinExp = /sin experiencia|primer empleo|recien grad|acabo de grad/.test(t);
+
+  return VACANTES.map(v=>{
+    let p=0; const razones=[];
+    const golpes = v.tags.filter(tag=>palabras.some(w=>w.startsWith(tag.slice(0,5))||tag.startsWith(w.slice(0,5))));
+    if(golpes.length){ p += Math.min(55, 22*golpes.length); razones.push("Coincide con el perfil que describes"); }
+    if(norm(v.t).split(" ").some(w=>w.length>3 && palabras.includes(w))) p += 12;
+    if(ciudad && v.c===ciudad.n){ p+=28; razones.push("Está en "+v.c); }
+    else if(ciudad) p-=6;
+    if(turno && v.turno===turno){ p+=12; razones.push("Turno "+v.turno+", como pediste"); }
+    if(sinExp && v.exp==="sin experiencia"){ p+=14; razones.push("No exige experiencia previa"); }
+    return {...v, p, razones};
+  }).filter(v=>v.p>18).sort((a,b)=>b.p-a.p).slice(0,4);
+}
+
+function pintar(lista, texto){
+  const res = document.getElementById('res');
+  if(!lista.length){
+    res.innerHTML = `<p class="estado">No hay vacantes de ejemplo que encajen con eso. Prueba con el cargo y la ciudad, por ejemplo “regente de farmacia en Bucaramanga”.</p>`;
+    return;
+  }
+  res.innerHTML = lista.map(v=>{
+    const docs = DOCS[v.area]||[];
+    const pct = Math.min(98, Math.round(v.p));
+    return `<article class="vac">
+      <div>
+        <h3>${v.t}</h3>
+        <div class="meta">${v.c} · Turno ${v.turno} · ${v.contrato} · ${v.salario} · Experiencia: ${v.exp}</div>
+        <ul>${v.razones.map(r=>`<li>${r}</li>`).join('')}</ul>
+        <ul style="opacity:.65;margin-top:10px"><li>Documentos que te pedirán: ${docs.join(", ")}</li></ul>
+      </div>
+      <div class="match">${pct}%<small>afinidad</small></div>
+    </article>`;
+  }).join('');
+}
+
+const ejemplos = [
+  "Auxiliar de enfermería en Montería, turnos de noche",
+  "Soy médico general y quiero urgencias en Cartagena",
+  "Recién graduado, sin experiencia, cerca de Sincelejo",
+  "Trabajo en nómina y busco algo administrativo en Bogotá"
+];
+document.getElementById('chips').innerHTML = ejemplos.map(e=>`<button class="chip">${e}</button>`).join('');
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{
+  const q=document.getElementById('q'); q.value=b.textContent; pintar(buscar(q.value), q.value);
+}));
+
+const input = document.getElementById('q');
+input.addEventListener('input', ()=>pintar(buscar(input.value), input.value));
+document.getElementById('go').addEventListener('click', ()=>pintar(buscar(input.value), input.value));
+input.addEventListener('keydown', e=>{ if(e.key==='Enter') pintar(buscar(input.value), input.value); });
+</script>
+</body>
+</html>
